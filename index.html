@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 
 <head>
@@ -8,6 +7,11 @@
     <title>Student serviced</title>
     <meta name="author" content="Ksawery Janik">
     <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./bower_components/knockout/dist/knockout.js"></script>
+    <script src="./bower_components/bower-knockout-mapping/dist/knockout.mapping.js"></script>
+    <script src="js/myScript.js"></script>
 </head>
 
 <body>
@@ -19,95 +23,51 @@
         Student service
     </div>
 </header>
-
-<ul class="nav">
-    <li><a href="#studentView">Student View</a></li>
-    <li><a href="#courseView">Course View</a></li>
-    <li><a href="#gradesView">Grades View</a></li>
-</ul>
-
+<nav>
+    <ul>
+        <li><a href="#studentView">Student View</a></li>
+        <li><a href="#courseView">Course View</a></li>
+        <li><a href="#gradesView">Grades View</a></li>
+    </ul>
+</nav>
 <section>
     <div class="table" id="studentView">
+
         <h3>
             Student List
             <button value="Add_student">Add Student</button>
         </h3>
 
-        <form>
-            <table>
+        <form method="get" name="studentForm">
+
+            <table id="studentTable">
                 <thead>
                 <tr>
-                    <th>
-                        Index
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                    <th>Id
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Name
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
-                    <th>Last Name
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
-                    </th>
-                    <th>Birthday
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                    <th>Teacher
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Actions
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>123456</td>
-                    <td>654321</td>
-                    <td>111111</td>
-                    <td>222222</td>
-                    <td>
-                        <input type="button" value="Grades" onclick="window.location.href='#gradesView'"/>
-                        <input type="button" value="Delete" onclick="window.location.href='#'"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>123456</td>
-                    <td>654321</td>
-                    <td>111111</td>
-                    <td>222222</td>
-                    <td>
-                        <input type="button" value="Grades" onclick="window.location.href='#gradesView'"/>
-                        <input type="button" value="Delete" onclick="window.location.href='#'"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>123456</td>
-                    <td>654321</td>
-                    <td>111111</td>
-                    <td>222222</td>
-                    <td>
-                        <input type="button" value="Grades" onclick="window.location.href='#gradesView'"/>
-                        <input type="button" value="Delete" onclick="window.location.href='#'"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>123456</td>
-                    <td>654321</td>
-                    <td>111111</td>
-                    <td>222222</td>
-                    <td>
-                        <input type="button" value="Grades" onclick="window.location.href='#gradesView'"/>
-                        <input type="button" value="Delete" onclick="window.location.href='#'"/>
-                    </td>
-                </tr>
-                </tbody>
+                <tbody data-bind="template: {name: 'studentsTemplate', foreach: viewModel.students()}"></tbody>
+                <template id="studentsTemplate">
+                    <tr>
+                        <td><input type="text" data-bind="textInput: index"/></td>
+                        <td><input type="text" data-bind="textInput: name"/></td>
+                        <td><input type="text" data-bind="textInput: lastName"/></td>
+                        <td><input type="date" data-bind="textInput: birthday"/></td>
+                    </tr>
+                </template>
             </table>
+
         </form>
     </div>
     <div class="table" id="courseView">
@@ -121,49 +81,44 @@
                 <thead>
                 <tr>
                     <th>Id
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Name
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Teacher
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Actions
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>123456</td>
-                    <td>654321</td>
-                    <td>222222</td>
+                    <td><input type="text" value="123456" readonly/></td>
+                    <td><input type="text" value="123456"/></td>
+                    <td><input type="text" value="123456"/></td>
                     <td>
+                        <input type="button" value="Update" onclick="window.location.href='#courseView'"/>
                         <input type="button" value="Delete" onclick="window.location.href='#'"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>654321</td>
-                    <td>111111</td>
-                    <td>222222</td>
+                    <td><input type="text" value="123456" readonly/></td>
+                    <td><input type="text" value="123456"/></td>
+                    <td><input type="text" value="123456"/></td>
                     <td>
+                        <input type="button" value="Update" onclick="window.location.href='#courseView'"/>
                         <input type="button" value="Delete" onclick="window.location.href='#'"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>123456</td>
-                    <td>654321</td>
-                    <td>111111</td>
+                    <td><input type="text" value="123456" readonly/></td>
+                    <td><input type="text" value="123456"/></td>
+                    <td><input type="text" value="123456"/></td>
                     <td>
+                        <input type="button" value="Update" onclick="window.location.href='#courseView'"/>
                         <input type="button" value="Delete" onclick="window.location.href='#'"/>
                     </td>
                 </tr>
@@ -182,46 +137,26 @@
                 <thead>
                 <tr>
                     <th>Index
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Value
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Date
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Course
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                     <th>Actions
-                        <button>
-                            <img class="lupa" src="img/lupa.png" alt="lupa">
-                        </button>
+                        <button><img class="lupa" src="img/lupa.png" alt="lupa"></button>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>cell1_1</td>
-                    <td>cell2_1</td>
-                    <td>cell3_1</td>
-                    <td>cell4_1</td>
-                    <td>
-                        <input type="button" value="Edit" onclick="window.location.href='#'"/>
-                        <input type="button" value="Delete" onclick="window.location.href='#'"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="index" placeholder="Index"></td>
-                    <td><input type="text" name="value" placeholder="Value" required></td>
+                    <td><input value="123" type="text" name="index" placeholder="Index" required></td>
+                    <td><input value="3" type="number" placeholder="Value" step=".5" min="2" max="5" required></td>
                     <td><input type="date" name="day"></td>
                     <td>
                         <label>
@@ -233,7 +168,25 @@
                         </label>
                     </td>
                     <td>
-                        <input type="button" value="Edit" onclick="window.location.href='#'"/>
+                        <input type="button" value="Update" onclick="window.location.href='#gradesView'"/>
+                        <input type="button" value="Delete" onclick="window.location.href='#'"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input value="123" type="text" name="index" placeholder="Index" required></td>
+                    <td><input value="4" type="number" placeholder="Value" step=".5" min="2" max="5" required></td>
+                    <td><input type="date" name="day"></td>
+                    <td>
+                        <label>
+                            <select name="courseBox">
+                                <option value="value1">Spring</option>
+                                <option value="value2">Java 1</option>
+                                <option value="value3">Java 3</option>
+                            </select>
+                        </label>
+                    </td>
+                    <td>
+                        <input type="button" value="Update" onclick="window.location.href='#gradesView'"/>
                         <input type="button" value="Delete" onclick="window.location.href='#'"/>
                     </td>
                 </tr>
@@ -248,8 +201,6 @@
     <a href="https://fc.put.poznan.pl/index.php" class="link" target="_blank">Put Poznan</a>
 </footer>
 
-
-<!--  <script src="js/scripts.js"></script>-->
 </body>
 
 </html>
