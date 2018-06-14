@@ -3,45 +3,42 @@
 var viewModel = function () {
     var self = this;
 
-    self.index = ko.observable();
-    self.name = ko.observable();
-    self.lastName = ko.observable();
-    self.birthday = ko.observable();
+    self.EmpId = ko.observable("");
+    self.EmpName = ko.observable("");
+    self.Designation = ko.observable("");
+    self.DeptId = ko.observable("1");
 
+    self.Message = ko.observable("");
     self.DeptIds = ko.observableArray([]);
-    self.Students = ko.observableArray([]);
 
-    self.getStudents = function () {
+    self.getDeptIds = function () {
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/students',
             dataType: "json",
             async: true,
             success: function (data) {
-                console.log(data);
-                self.Students(data);
+                console.log("Student successful: ", data)
+                // debugger;
+                self.DeptIds(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                if (xhr.status !== 403)
+                if (xhr.status != 403)
                     alert("Status: " + xhr.status + ", Error: " + thrownError, "Error");
             }
         });
 
     };
-    self.getStudents();
+    self.getDeptIds();
 
-    self.updateStudent = function (data) {
-        console.log(data);
-        console.log(self.index());
-        console.log(self.index);
+    self.Update = function () {
+        var Employee = {};
+        Employee.EmpId = self.EmpId();
+        Employee.EmpName = self.EmpName();
+        Employee.Designation = self.Designation();
+        Employee.DeptId = self.DeptId();
 
-        var Student = {};
-        Student.index = self.index();
-        Student.name = self.name();
-        Student.lastName = self.lastName();
-        Student.birthday = self.birthday();
-
-        console.log(Student)
+        console.log(Employee)
 
         // $.ajax({
         //     url: 'http://localhost:8080/students',
@@ -61,7 +58,7 @@ var viewModel = function () {
         //     }
         // });
     };
-};
+}
 
 $(document).ready(function () {
     ko.applyBindings(new viewModel());

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student serviced</title>
+    <meta name="author" content="Ksawery Janik">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./bower_components/knockout/dist/knockout.js"></script>
+    <script src="./bower_components/bower-knockout-mapping/dist/knockout.mapping.js"></script>
+    <script src="js/ttt.js"></script>
+</head>
+
+<body>
+<header>
+    <div id="topbarL">
+        <img src="img/hat.png" alt="Hat" height="100" width="100">
+    </div>
+    <div id="topbarR">
+        Student service
+    </div>
+</header>
+<nav>
+    <ul>
+        <li><a href="#studentsView">Student View</a></li>
+        <li><a href="#coursesView">Course View</a></li>
+        <li><a href="#gradesView">Grades View</a></li>
+    </ul>
+</nav>
+<section>
+    <div class="table" id="studentsView">
+
+        <h3>
+            Student List
+        </h3>
+
+        <form name="studentForm">
+            <table>
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>LastName</th>
+                    <th>Birthday</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody data-bind="template: { name: currentTemplate, foreach: Students }"></tbody>
+
+                <template id="studentsTemplate">
+                    <tr>
+                        <td>
+                            <span data-bind="text: StuIndex"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: StuName"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: StuLastName"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: StuBirthday"></span>
+                        </td>
+                        <td>
+                            <input type="button" value="Edit" data-bind="click: function () { viewModel.editStudent($data);}"/>
+                            <input type="button" value="delete" data-bind="click: function () { viewModel.deleteStudent($data); }"/>
+                        </td>
+                    </tr>
+                </template>
+                <!--<tr>-->
+                <!--<td>-->
+                <!--<input type="text" data-bind="value: $data.EmpNo" id="txteno" disabled="disabled"/>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<input type="text" data-bind="value: $data.EmpName" id="txtename"/>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<input type="text" data-bind="value: $data.DeptName" id="txtdname"/>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<input type="text" data-bind="value: $data.Designation" id="txtdesig"/>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<input type="button" value="Save" data-bind="click: EmpViewModel.saveEmployee"/>-->
+                <!--<input type="button" value="Cancel" data-bind="click: function () { EmpViewModel.reset(); }"/>-->
+                <!--</td>-->
+                <!--</tr>-->
+            </table>
+
+
+            <!--<table id="studentTable">-->
+            <!--<thead>-->
+            <!--<tr>-->
+            <!--<th>Index</th>-->
+            <!--<th>Name</th>-->
+            <!--<th>LastName</th>-->
+            <!--<th>Birthday</th>-->
+            <!--<th>Actions</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody data-bind="template: {name: 'studentsTemplate', foreach: viewModel.students()}"></tbody>-->
+            <!--<template id="studentsTemplate">-->
+            <!--<tr>-->
+            <!--<td><span data-bind="text: EmpNo"></span></td>-->
+            <!--<td><span data-bind="text: EmpName"></span></td>-->
+            <!--<td><span data-bind="text: DeptName"></span></td>-->
+            <!--<td><span data-bind="text: Designation"></span></td>-->
+            <!--<td><span data-bind="text: Salary"></span></td>-->
+            <!--<td><input type="button" value="Edit"-->
+            <!--data-bind="click: function () { EmpViewModel.editTemplate($data);}"/></td>-->
+            <!--<td><input type="button" value="delete"-->
+            <!--data-bind="click: function () { EmpViewModel.deleteEmployee($data); }"/></td>-->
+
+
+            <!--&lt;!&ndash;<td><input type="text" data-bind="textInput: index" name="index" placeholder="Index" required readonly/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="text" data-bind="textInput: name" name="name" placeholder="Name"/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="text" data-bind="textInput: lastName" name="lastName" placeholder="lastName"/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="date" data-bind="textInput: birthday" name="birthday"/></td>&ndash;&gt;-->
+            <!--</tr>-->
+            <!--</template>-->
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="text" name="index" placeholder="Index" required/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="text" name="name" placeholder="Name"/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="text" name="lastName" placeholder="lastName"/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td><input type="date" name="birthday"/></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="button" value="Add New" data-bind="click: addStudent"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+            <!--</table>-->
+
+        </form>
+    </div>
+</section>
+
+<footer>
+    Ksawery Janik &copy;<br>
+    <a href="https://fc.put.poznan.pl/index.php" class="link" target="_blank">Put Poznan</a>
+</footer>
+
+</body>
+
+</html>
