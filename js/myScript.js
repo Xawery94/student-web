@@ -9,7 +9,7 @@ var viewModel = function () {
     self.birthday = ko.observable();
 
     self.DeptIds = ko.observableArray([]);
-    self.Students = ko.observableArray([]);
+    self.Students = ko.observableArray([]).extend({notify: 'always'});
 
     self.getStudents = function () {
         $.ajax({
@@ -26,48 +26,79 @@ var viewModel = function () {
                     alert("Status: " + xhr.status + ", Error: " + thrownError, "Error");
             }
         });
-
     };
+
     self.getStudents();
 
-    self.updateStudent = function (data) {
-        console.log(data);
-        console.log(self.index());
-        console.log(self.index);
+    self.addStudent = function (data) {
+        let Student = {};
 
-        var Student = {};
-        Student.index = self.index();
-        Student.name = self.name();
-        Student.lastName = self.lastName();
-        Student.birthday = self.birthday();
+        Student.index = data.index.value;
+        Student.name = data.name.value;
+        Student.lastName = data.lastName.value;
+        Student.birthday = data.birthday.value;
 
-        console.log(Student)
+        let myJSON = JSON.stringify(Student);
 
-        // $.ajax({
-        //     url: 'http://localhost:8080/students',
-        //     type: 'POST',
-        //     data: Employee,
-        //     success: function (result) {
-        //         self.Message("Recorded inserted Sucessfully");
-        //
-        //         self.EmpId("");
-        //         self.EmpName("");
-        //         self.Designation("");
-        //         self.DeptId("")
-        //     },
-        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //         debugger;
-        //         alert("some error");
-        //     }
-        // });
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/students",
+            accept: 'application/json',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: myJSON,
+            complete: function (xhr) {
+                if (xhr.status === 201) {
+                    console.log('success');
+                    self.getStudents();
+                } else {
+                    alert("NoGood");
+                }
+            },
+            dataType: 'json'
+        });
     };
+
+    self.updateStudent = function (data) {
+        console.log("data: ", data);
+        console.log("student index: ", data.index);
+
+        let myJSON = JSON.stringify(data);
+
+        $.ajax({
+            url: "http://localhost:8080/students/" + data.index,
+            method: "PUT",
+            accept: 'application/json',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: myJSON
+        }).then(function () {
+            self.getStudents();
+        });
+    };
+
+    self.deleteStudent = function (dataToDelete) {
+        $.ajax({
+            url: "http://localhost:8080/students/" + dataToDelete.index,
+            type: 'DELETE',
+            success: function () {
+                self.getStudents();
+            }
+        });
+    }
+    
+    self.showGrades = function (student) {
+        console.log("show grades for student: ", student)
+    }
 };
 
 $(document).ready(function () {
     ko.applyBindings(new viewModel());
 });
-
-
 
 
 //
@@ -178,4 +209,36 @@ $(document).ready(function () {
 //
 //     ko.applyBindings(new BetterListModel());
 //     //ko.applyBindings(new addStudent());
+// });
+// $.ajax({
+//     url: "http://localhost:8080/students",
+//     method: "POST",
+//     accept: 'application/json',
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Accept': 'application/json'
+//     },
+//     dataType: 'json',
+//     data: myJSON
+// }).then(function (data) {
+//     console.log(data);
+//     let koNode = document.getElementById('studentTable');
+//     ko.cleanNode(koNode);
+//     // self.Students(data);
+//     self.getStudents();
+//
+// });
+// $.ajax({
+//     url: 'http://localhost:8080/students',
+//     type: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Accept': 'application/json'
+//     },
+//     dataType: 'json',
+//     data: myJSON,
+// success: function (result) {
+//     console.log(result);
+//
+// }
 // });

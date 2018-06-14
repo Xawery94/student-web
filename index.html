@@ -48,242 +48,146 @@
             </thead>
             <tbody data-bind="template: {name: 'studentsTemplate', foreach: Students}"></tbody>
 
-            <template id="studentsTemplate">
+            <script id="studentsTemplate" type="text/html">
                 <tr>
-                    <td><input type="text" data-bind="value: $data.index" name="index" placeholder="Index" required readonly/></td>
+                    <td><input type="text" data-bind="value: index" name="index" placeholder="Index" required readonly/>
+                    </td>
                     <td><input type="text" data-bind="textInput: name" name="name" placeholder="Name"/></td>
                     <td><input type="text" data-bind="textInput: lastName" name="lastName" placeholder="lastName"/></td>
                     <td><input type="date" data-bind="textInput: birthday" name="birthday"/></td>
 
-                    <td><input type="submit" value="Save" name="btnSave" data-bind="click: updateStudent.bind($data, $parent)"/></td>
+                    <td>
+                        <input type="submit" value="Save" name="btnSave" data-bind="click: $parent.updateStudent"/>
+                        <input type="submit" value="Delete" name="btnDelete" data-bind="click: $parent.deleteStudent"/>
+                        <input type="submit" value="Grades" name="btnGrades" data-bind="click: $parent.showGrades"/>
+                    </td>
                 </tr>
-            </template>
+            </script>
 
+            <tr>
+                <form data-bind="submit: addStudent">
+                    <td>
+                        <input type="text" name="index" placeholder="Index" required
+                               data-bind="textInput: index"/></td>
+                    <td><input type="text" name="name" placeholder="Name" data-bind="textInput: name"/>
+                    </td>
+                    <td><input type="text" name="lastName" placeholder="lastName"
+                               data-bind="textInput: lastName"/></td>
+                    <td><input type="date" name="birthday" data-bind="textInput: birthday"/></td>
+                    <td>
+                        <button type="submit">Add</button>
+                    </td>
+                </form>
+            </tr>
         </table>
+    </div>
 
-        <!--<ul data-bind="foreach: places">-->
-            <!--<li>-->
-                <!--<span data-bind="text: $data"></span>-->
-                <!--<button data-bind="click: $parent.removePlace">Remove</button>-->
-            <!--</li>-->
-        <!--</ul>-->
+    <div class="table" id="coursesView">
+        <h3>
+            Course List
+            <button value="Add_course">Add Course</button>
+        </h3>
 
-        <!--<script type="text/javascript">-->
-            <!--function MyViewModel() {-->
-                <!--var self = this;-->
-                <!--self.places = ko.observableArray(['London', 'Paris', 'Tokyo']);-->
-
-                <!--// The current item will be passed as the first parameter, so we know which place to remove-->
-                <!--self.removePlace = function(place) {-->
-                    <!--self.places.remove(place)-->
-                <!--}-->
-            <!--}-->
-            <!--ko.applyBindings(new MyViewModel());-->
-        <!--</script>-->
-
-        <!--<div id="div1">-->
-            <!--<table align="center">-->
+        <form>
+            <table>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Teacher</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
                 <!--<tr>-->
-                    <!--<td>-->
-                        <!--enter code here-->
-                        <!--Employee Id:-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--enter code here-->
-                        <!--<input data-bind="value:EmpId" type="text" id="txtempid"/>-->
-                    <!--</td>-->
+                <!--<td><input type="text" value="123456" readonly/></td>-->
+                <!--<td><input type="text" value="123456"/></td>-->
+                <!--<td><input type="text" value="123456"/></td>-->
+                <!--<td>-->
+                <!--<input type="button" value="Update" onclick="window.location.href='#coursesView'"/>-->
+                <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
+                <!--</td>-->
                 <!--</tr>-->
                 <!--<tr>-->
-                    <!--<td>-->
-                        <!--Name:-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<input data-bind="value:EmpName" type="text" id="txtempname"/>-->
-                    <!--</td>-->
+                <!--<td><input type="text" value="123456" readonly/></td>-->
+                <!--<td><input type="text" value="123456"/></td>-->
+                <!--<td><input type="text" value="123456"/></td>-->
+                <!--<td>-->
+                <!--<input type="button" value="Update" onclick="window.location.href='#coursesView'"/>-->
+                <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
+                <!--</td>-->
                 <!--</tr>-->
                 <!--<tr>-->
-                    <!--<td>-->
-                        <!--Designation:-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<input data-bind="value:Designation" type="text" id="txtdesignation"/>-->
-                    <!--</td>-->
+                <!--<td><input type="text" value="123456" readonly/></td>-->
+                <!--<td><input type="text" value="123456"/></td>-->
+                <!--<td><input type="text" value="123456"/></td>-->
+                <!--<td>-->
+                <!--<input type="button" value="Update" onclick="window.location.href='#coursesView'"/>-->
+                <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
+                <!--</td>-->
+                <!--</tr>-->
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="table" id="gradesView">
+        <h3>
+            Grades List
+            <button value="Add_grade">Add Grade</button>
+        </h3>
+
+        <form method="get" id="grade_form">
+            <table>
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Value</th>
+                    <th>Date</th>
+                    <th>Course</th>
+                    <th>Actions<!--<button><img class="lupa" src="img/lupa.png" alt="lupa"></button>--></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--<tr>-->
+                <!--<td><input value="123" type="text" name="index" placeholder="Index" required></td>-->
+                <!--<td><input value="3" type="number" placeholder="Value" step=".5" min="2" max="5" required></td>-->
+                <!--<td><input type="date" name="day"></td>-->
+                <!--<td>-->
+                <!--<label>-->
+                <!--<select name="courseBox">-->
+                <!--<option value="value1">Spring</option>-->
+                <!--<option value="value2">Java 1</option>-->
+                <!--<option value="value3">Java 3</option>-->
+                <!--</select>-->
+                <!--</label>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<input type="button" value="Update" onclick="window.location.href='#gradesView'"/>-->
+                <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
+                <!--</td>-->
                 <!--</tr>-->
                 <!--<tr>-->
-                    <!--<td>-->
-                        <!--Department Name:-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<select id="CategoryType" style="width: 250px; height: 25px; margin-top:-->
-    <!--10px;" data-bind="options: DeptIds, optionsText: 'name', optionsValue: 'value', value: DeptId"></select>-->
-                    <!--</td>-->
+                <!--<td><input value="123" type="text" name="index" placeholder="Index" required></td>-->
+                <!--<td><input value="4" type="number" placeholder="Value" step=".5" min="2" max="5" required></td>-->
+                <!--<td><input type="date" name="day"></td>-->
+                <!--<td>-->
+                <!--<label>-->
+                <!--<select name="courseBox">-->
+                <!--<option value="value1">Spring</option>-->
+                <!--<option value="value2">Java 1</option>-->
+                <!--<option value="value3">Java 3</option>-->
+                <!--</select>-->
+                <!--</label>-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--<input type="button" value="Update" onclick="window.location.href='#gradesView'"/>-->
+                <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
+                <!--</td>-->
                 <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td align="right" colspan="2">-->
-                        <!--<input type="submit" value="Save" id="btnSave" name="btnSave" data-bind="click: Update"/>-->
-                        <!--&nbsp-->
-                        <!--<input type="submit" value="Cancel" id="btnCancel" name="btnCancel"/>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td align="right" colspan="2">-->
-                        <!--<div id="lblResult" data-bind="text: Message"></div>-->
-                    <!--</td>-->
-                <!--</tr>-->
-            <!--</table>-->
-
-
-            <!--<form data-bind="submit:addStudent">-->
-            <!--<input type="text" name="index" value="111" placeholder="Index" required-->
-            <!--data-bind="value: student.index"/>-->
-            <!--<input type="text" name="name" value="qqqqq" placeholder="Name" data-bind="value: student.name"/>-->
-            <!--<input type="text" name="lastName" value="aaaaa" placeholder="lastName"-->
-            <!--data-bind="value: student.lastName"/>-->
-            <!--<input type="date" name="birthday" value="2000-11-11" data-bind="value: student.birthday"/>-->
-            <!--<button type="submit">Add</button>-->
-            <!--</form>-->
-
-            <!--<form name="studentForm">-->
-
-            <!--<table id="studentTable">-->
-            <!--<thead>-->
-            <!--<tr>-->
-            <!--<th>Index</th>-->
-            <!--<th>Name</th>-->
-            <!--<th>LastName</th>-->
-            <!--<th>Birthday</th>-->
-            <!--<th>Actions</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody data-bind="template: {name: 'studentsTemplate', foreach: viewModel.students()}"></tbody>-->
-
-            <!--<template id="studentsTemplate">-->
-            <!--<tr>-->
-            <!--<td><input type="text" data-bind="textInput: index" name="index" placeholder="Index"-->
-            <!--required-->
-            <!--readonly/></td>-->
-            <!--<td><input type="text" data-bind="textInput: name" name="name" placeholder="Name"/></td>-->
-            <!--<td><input type="text" data-bind="textInput: lastName" name="lastName"-->
-            <!--placeholder="lastName"/>-->
-            <!--</td>-->
-            <!--<td><input type="date" data-bind="textInput: birthday" name="birthday"/></td>-->
-            <!--<td>-->
-            <!--<input type="button" value="Update" data-bind="click: updateStudent"/>-->
-            <!--<input type="button" value="Delete" data-bind="click: deleteItem"/>-->
-            <!--</td>-->
-            <!--</tr>-->
-            <!--</template>-->
-
-            <!--</table>-->
-
-            <!--</form>-->
-        </div>
-        <div class="table" id="coursesView">
-            <h3>
-                Course List
-                <button value="Add_course">Add Course</button>
-            </h3>
-
-            <form>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Teacher</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!--<tr>-->
-                    <!--<td><input type="text" value="123456" readonly/></td>-->
-                    <!--<td><input type="text" value="123456"/></td>-->
-                    <!--<td><input type="text" value="123456"/></td>-->
-                    <!--<td>-->
-                    <!--<input type="button" value="Update" onclick="window.location.href='#coursesView'"/>-->
-                    <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td><input type="text" value="123456" readonly/></td>-->
-                    <!--<td><input type="text" value="123456"/></td>-->
-                    <!--<td><input type="text" value="123456"/></td>-->
-                    <!--<td>-->
-                    <!--<input type="button" value="Update" onclick="window.location.href='#coursesView'"/>-->
-                    <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td><input type="text" value="123456" readonly/></td>-->
-                    <!--<td><input type="text" value="123456"/></td>-->
-                    <!--<td><input type="text" value="123456"/></td>-->
-                    <!--<td>-->
-                    <!--<input type="button" value="Update" onclick="window.location.href='#coursesView'"/>-->
-                    <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    </tbody>
-                </table>
-            </form>
-        </div>
-        <div class="table" id="gradesView">
-            <h3>
-                Grades List
-                <button value="Add_grade">Add Grade</button>
-            </h3>
-
-            <form method="get" id="grade_form">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Index</th>
-                        <th>Value</th>
-                        <th>Date</th>
-                        <th>Course</th>
-                        <th>Actions<!--<button><img class="lupa" src="img/lupa.png" alt="lupa"></button>--></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!--<tr>-->
-                    <!--<td><input value="123" type="text" name="index" placeholder="Index" required></td>-->
-                    <!--<td><input value="3" type="number" placeholder="Value" step=".5" min="2" max="5" required></td>-->
-                    <!--<td><input type="date" name="day"></td>-->
-                    <!--<td>-->
-                    <!--<label>-->
-                    <!--<select name="courseBox">-->
-                    <!--<option value="value1">Spring</option>-->
-                    <!--<option value="value2">Java 1</option>-->
-                    <!--<option value="value3">Java 3</option>-->
-                    <!--</select>-->
-                    <!--</label>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<input type="button" value="Update" onclick="window.location.href='#gradesView'"/>-->
-                    <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                    <!--<td><input value="123" type="text" name="index" placeholder="Index" required></td>-->
-                    <!--<td><input value="4" type="number" placeholder="Value" step=".5" min="2" max="5" required></td>-->
-                    <!--<td><input type="date" name="day"></td>-->
-                    <!--<td>-->
-                    <!--<label>-->
-                    <!--<select name="courseBox">-->
-                    <!--<option value="value1">Spring</option>-->
-                    <!--<option value="value2">Java 1</option>-->
-                    <!--<option value="value3">Java 3</option>-->
-                    <!--</select>-->
-                    <!--</label>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                    <!--<input type="button" value="Update" onclick="window.location.href='#gradesView'"/>-->
-                    <!--<input type="button" value="Delete" onclick="window.location.href='#'"/>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    </tbody>
-                </table>
-            </form>
-        </div>
+                </tbody>
+            </table>
+        </form>
+    </div>
 </section>
 
 <footer>
