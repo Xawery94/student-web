@@ -70,7 +70,6 @@ var viewModel = function () {
             dataType: "json",
             async: true,
             success: function (data) {
-                // console.log(data);
                 self.Courses(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -147,17 +146,23 @@ var viewModel = function () {
             type: 'DELETE',
             success: function () {
                 self.getStudents();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status !== 403)
+                    console.log("Error: " + thrownError);
             }
         });
     };
 
     self.getGrades = function (student) {
-        if (typeof student != 'object') {
-            var st = student;
+        let st;
+        if (typeof student !== 'object') {
+            st = student;
         } else {
-            var st = student.index;
+            st = student.index;
         }
 
+        self.gradeIndex(st);
         self.Grades([]);
         let Grade = {};
 
@@ -178,7 +183,7 @@ var viewModel = function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status !== 403)
-                    alert("Error: " + thrownError);
+                    console.log("Error: " + thrownError);
             }
         });
     };
@@ -240,7 +245,7 @@ var viewModel = function () {
 
     self.deleteCourse = function (dataToDelete) {
         $.ajax({
-            url: "http://localhost:8080/courses/" + dataToDelete.id,
+            url: "http://localhost:8080/courses/" + dataToDelete.name,
             type: 'DELETE',
             success: function () {
                 self.getCourses();
@@ -288,8 +293,6 @@ var viewModel = function () {
 
         GradeToUpdate.value = data.value;
         GradeToUpdate.courseName = data.courseName;
-
-        console.log(GradeToUpdate)
 
         let myJSON = JSON.stringify(GradeToUpdate);
 

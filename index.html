@@ -154,8 +154,9 @@
                     </td>
                     <td><input type="text" data-bind="textInput: value" name="value" placeholder="Value"/>
                     </td>
-                    <td><input type="text" data-bind="textInput: date" name="date" placeholder="Date"/>
-                    <td><input type="text" data-bind="textInput: courseName" name="courseName" placeholder="Course"/>
+                    <td><input type="text" data-bind="textInput: date" name="date" placeholder="Date" readonly/>
+                    <td><input type="text" data-bind="textInput: courseName" name="courseName" placeholder="Course"
+                               readonly/>
                     </td>
                     <td>
                         <input type="submit" value="Save" name="btnSave" data-bind="click: $parent.updateGrade"/>
