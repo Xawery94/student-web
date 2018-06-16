@@ -73,7 +73,10 @@ var viewModel = function () {
             async: true,
             success: function (data) {
                 self.Courses(data);
-                self.id(data.length + 1)
+
+                for (let i = 0; i < data.length; i++) {
+                    self.id(data[i].id + 1);
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status !== 403)
@@ -229,13 +232,14 @@ var viewModel = function () {
     };
 
     self.updateCourse = function (data) {
-        // console.log("data: ", data);
-        // console.log("student index: ", data.index);
+        let Course = {};
+        Course.name = data.name;
+        Course.teacher = data.teacher;
 
-        let myJSON = JSON.stringify(data);
+        let myJSON = JSON.stringify(Course);
 
         $.ajax({
-            url: "http://localhost:8080/courses/" + data.name,
+            url: "http://localhost:8080/courses/" + data.id,
             method: "PUT",
             accept: 'application/json',
             headers: {
@@ -250,7 +254,7 @@ var viewModel = function () {
 
     self.deleteCourse = function (dataToDelete) {
         $.ajax({
-            url: "http://localhost:8080/courses/" + dataToDelete.name,
+            url: "http://localhost:8080/courses/" + dataToDelete.id,
             type: 'DELETE',
             success: function () {
                 self.getCourses();
