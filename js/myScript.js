@@ -20,7 +20,9 @@ var viewModel = function () {
     self.gradeCourse = ko.observable();
     self.gradeDate = ko.observable();
 
+    self.availableGrades = ko.observableArray(['2', '3', '3.5', '4', '4.5', '5']);
     self.availableCourses = ko.observableArray([]);
+    self.selectedGrade = ko.observable();
     self.selectedCourse = ko.observable();
 
     self.Students = ko.observableArray([]).extend({notify: 'always'});
@@ -53,7 +55,7 @@ var viewModel = function () {
             dataType: "json",
             async: true,
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 self.availableCourses(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -71,6 +73,7 @@ var viewModel = function () {
             async: true,
             success: function (data) {
                 self.Courses(data);
+                self.id(data.length + 1)
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status !== 403)
@@ -105,7 +108,6 @@ var viewModel = function () {
             data: myJSON,
             complete: function (xhr) {
                 if (xhr.status === 201) {
-                    console.log('success');
                     self.getStudents();
 
                     self.index("");
@@ -121,8 +123,8 @@ var viewModel = function () {
     };
 
     self.updateStudent = function (data) {
-        console.log("data: ", data);
-        console.log("student index: ", data.index);
+        // console.log("data: ", data);
+        // console.log("student index: ", data.index);
 
         let myJSON = JSON.stringify(data);
 
@@ -163,6 +165,7 @@ var viewModel = function () {
         }
 
         self.gradeIndex(st);
+        self.gradeId(1);
         self.Grades([]);
         let Grade = {};
 
@@ -179,6 +182,8 @@ var viewModel = function () {
                     Grade.date = data[i].date;
                     Grade.courseName = data[i].courseName;
                     self.Grades.push(Grade);
+
+                    self.gradeId(data[i].id + 1);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -210,7 +215,7 @@ var viewModel = function () {
             data: myJSON,
             complete: function (xhr) {
                 if (xhr.status === 201) {
-                    console.log('success');
+                    // console.log('success');
                     self.getCourses();
 
                     self.id("");
@@ -224,8 +229,8 @@ var viewModel = function () {
     };
 
     self.updateCourse = function (data) {
-        console.log("data: ", data);
-        console.log("student index: ", data.index);
+        // console.log("data: ", data);
+        // console.log("student index: ", data.index);
 
         let myJSON = JSON.stringify(data);
 
@@ -258,7 +263,7 @@ var viewModel = function () {
     self.addGrade = function (data) {
         let Grade = {};
         Grade.id = data.gradeId.value;
-        Grade.value = data.gradeValue.value;
+        Grade.value = self.selectedGrade();
         Grade.courseName = self.selectedCourse().name;
 
         let myJSON = JSON.stringify(Grade);
@@ -275,12 +280,8 @@ var viewModel = function () {
             data: myJSON,
             complete: function (xhr) {
                 if (xhr.status === 201) {
-                    console.log('success');
-
+                    // console.log('success');
                     self.getGrades(data.gradeIndex.value);
-                    self.gradeIndex("");
-                    self.gradeValue("");
-                    self.gradeDate("");
                 } else {
                     alert("NoGood");
                 }
@@ -312,7 +313,7 @@ var viewModel = function () {
 
     self.deleteGrade = function (dataToDelete) {
         $.ajax({
-            url: "http://localhost:8080/students/" + dataToDelete.index + "/courses/" + dataToDelete.courseName + "/grades/" + dataToDelete.value,
+            url: "http://localhost:8080/students/" + dataToDelete.index + "/courses/" + dataToDelete.courseName + "/grades/" + dataToDelete.id,
             type: 'DELETE',
             success: function () {
                 self.getGrades(dataToDelete.index);
